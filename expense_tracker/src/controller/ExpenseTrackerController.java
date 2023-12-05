@@ -12,12 +12,12 @@ import model.Transaction;
 import model.Filter.TransactionFilter;
 
 public class ExpenseTrackerController {
-  
+
   private ExpenseTrackerModel model;
   private ExpenseTrackerView view;
-  /** 
+  /**
    * The Controller is applying the Strategy design pattern.
-   * This is the has-a relationship with the Strategy class 
+   * This is the has-a relationship with the Strategy class
    * being used in the applyFilter method.
    */
   private TransactionFilter filter;
@@ -42,10 +42,10 @@ public class ExpenseTrackerController {
     if (!InputValidation.isValidCategory(category)) {
       return false;
     }
-    
+
     Transaction t = new Transaction(amount, category);
     model.addTransaction(t);
-    view.update(model);
+    //view.update(model);
     return true;
   }
 
@@ -63,7 +63,9 @@ public class ExpenseTrackerController {
         }
       }
       model.setMatchedFilterIndices(rowIndexes);
-      view.update(model);
+      //view.update(model);
+      //model.stateChanged(); // Notify observers that the model has changed
+
     }
     else{
       JOptionPane.showMessageDialog(view, "No filter applied");
@@ -76,12 +78,12 @@ public class ExpenseTrackerController {
     if (rowIndex >= 0 && rowIndex < model.getTransactions().size()) {
       Transaction removedTransaction = model.getTransactions().get(rowIndex);
       model.removeTransaction(removedTransaction);
-      view.update(model);
+      // view.update(model);
       // The undo was allowed.
       return true;
     }
 
     // The undo was disallowed.
     return false;
-  }    
+  }
 }
